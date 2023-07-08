@@ -132,7 +132,6 @@
       }
     }
   },
-  "defaultProject": "Flights",
   "cli": {
     "analytics": false
   }
