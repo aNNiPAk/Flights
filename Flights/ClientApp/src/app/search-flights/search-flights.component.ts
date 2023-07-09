@@ -12,6 +12,12 @@ export class SearchFlightsComponent {
 
   constructor(private flightService: FlightService) {}
   search(): void {
-    this.flightService.flightGet({}).subscribe((r) => (this.searchResult = r));
+    this.flightService
+      .flightGet({})
+      .subscribe((r) => (this.searchResult = r), this.handleError);
+  }
+
+  private handleError(err: any): void {
+    console.log(err);
   }
 }
