@@ -16,7 +16,7 @@ namespace Flights.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<FlightRm> Get() => new List<FlightRm>
+        public IEnumerable<FlightRm> Search() => new List<FlightRm>
             {
                 new (Guid.NewGuid(),
                     "American Airlines",
