@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-book-flight',
   templateUrl: './book-flight.component.html',
   styleUrls: ['./book-flight.component.css'],
 })
-export class BookFlightComponent implements OnInit {
+export class BookFlightComponent {
   flightId: string = 'not loaded';
 
   constructor(private route: ActivatedRoute) {}
