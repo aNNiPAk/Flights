@@ -26,6 +26,7 @@ import { RegisterPassengerComponent } from './register-passenger/register-passen
       { path: '', component: SearchFlightsComponent, pathMatch: 'full' },
       { path: 'search-flight', component: SearchFlightsComponent },
       { path: 'book-flight/:flightId', component: BookFlightComponent },
+      { path: 'register-passenger', component: RegisterPassengerComponent },
     ]),
   ],
   providers: [],
