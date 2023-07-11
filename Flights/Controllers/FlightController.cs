@@ -55,7 +55,7 @@ namespace Flights.Controllers
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id:guid}")]
-        public ActionResult<FlightRm> FindFlight(Guid id)
+        public ActionResult<FlightRm> Find(Guid id)
         {
             var flight = Flights.SingleOrDefault(x => x.Id == id);
 
