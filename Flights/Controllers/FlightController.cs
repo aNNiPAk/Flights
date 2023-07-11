@@ -50,10 +50,17 @@ namespace Flights.Controllers
             _logger = logger;
         }
 
+        [ProducesResponseType(typeof(IEnumerable<FlightRm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public IEnumerable<FlightRm> Search() => Flights;
 
+        [ProducesResponseType(typeof(FlightRm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{id:guid}")]
         public ActionResult<FlightRm> Find(Guid id)
         {
