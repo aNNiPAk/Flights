@@ -13,7 +13,10 @@ export class BookFlightComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(
-      (p) => (this.flightId = p.get('flightId') ?? 'not loaded')
+      (p) => (this.flightId = this.findFlight(p.get('flightId')))
     );
   }
+
+  private findFlight = (flightId: string | null) =>
+    (this.flightId = flightId ?? 'not loaded');
 }
