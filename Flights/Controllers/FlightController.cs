@@ -36,7 +36,7 @@ namespace Flights.Controllers
                 new TimePlaceRm("Amsterdam", DateTime.Now.AddHours(Random.Next(1, 21))),
                 Random.Next(90, 5000).ToString(),
                 Random.Next(1, 853)),
-            new (Guid.NewGuid(), 
+            new (Guid.NewGuid(),
                 "BB Heliag",
                 new TimePlaceRm("Baku", DateTime.Now.AddHours(Random.Next(4, 25))),
                 new TimePlaceRm("Zurich", DateTime.Now.AddHours(Random.Next(1, 23))),
@@ -45,12 +45,15 @@ namespace Flights.Controllers
         };
 
 
-    public FlightController(ILogger<FlightController> logger)
+        public FlightController(ILogger<FlightController> logger)
         {
             _logger = logger;
         }
 
-    [HttpGet]
-    public IEnumerable<FlightRm> Search() => Flights;
+        [HttpGet]
+        public IEnumerable<FlightRm> Search() => Flights;
+
+        [HttpGet("{id:guid}")]
+        public FlightRm? FindFlight(Guid id) => Flights.SingleOrDefault(x => x.Id == id);
     }
 }
