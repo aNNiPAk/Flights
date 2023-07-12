@@ -18,7 +18,7 @@ namespace Flights.Controllers
         {
             _passengers.Add(dto);
             System.Diagnostics.Debug.WriteLine($"Registers Passenger count: {_passengers.Count}");
-            return Ok();
+            return CreatedAtAction(nameof(Find), new { email= dto.Email });
         }
 
         [HttpGet("{{email}}")]
