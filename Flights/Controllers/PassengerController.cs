@@ -7,13 +7,17 @@ namespace Flights.Controllers
     [ApiController]
     public class PassengerController : ControllerBase
     {
+        private static IList<NewPassengerDto> _passengers = new List<NewPassengerDto>();
+        
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public IActionResult Register(NewPassengerDto dto)
         {
-            throw new NotImplementedException();
+            _passengers.Add(dto);
+            System.Diagnostics.Debug.WriteLine($"Registers Passenger count: {_passengers.Count}");
+            return Ok();
         }
     }
 }
