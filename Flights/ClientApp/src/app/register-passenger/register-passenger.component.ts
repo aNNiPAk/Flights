@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PassengerService } from '../api/services';
 import { FormBuilder } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-register-passenger',
@@ -10,7 +11,8 @@ import { FormBuilder } from '@angular/forms';
 export class RegisterPassengerComponent {
   constructor(
     private passengerService: PassengerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) {}
 
   form = this.fb.group({
@@ -22,8 +24,11 @@ export class RegisterPassengerComponent {
 
   register() {
     console.log(this.form.value);
+
     this.passengerService
       .registerPassenger({ body: this.form.value })
-      .subscribe((_) => console.log('form posted successfully'));
+      .subscribe((_) =>
+        this.authService.loginUser({ email: this.form.value.email })
+      );
   }
 }
