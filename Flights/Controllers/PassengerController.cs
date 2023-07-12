@@ -9,7 +9,7 @@ namespace Flights.Controllers;
 [ApiController]
 public class PassengerController : ControllerBase
 {
-    private static readonly IList<NewPassengerDto> _passengers = new List<NewPassengerDto>();
+    private static readonly IList<NewPassengerDto> Passengers = new List<NewPassengerDto>();
 
     [HttpPost]
     [ProducesResponseType(201)]
@@ -17,15 +17,15 @@ public class PassengerController : ControllerBase
     [ProducesResponseType(500)]
     public IActionResult Register(NewPassengerDto dto)
     {
-        _passengers.Add(dto);
-        Debug.WriteLine($"Registers Passenger count: {_passengers.Count}");
+        Passengers.Add(dto);
+        Debug.WriteLine($"Registers Passenger count: {Passengers.Count}");
         return CreatedAtAction(nameof(Find), new { email = dto.Email });
     }
 
     [HttpGet("{{email}}")]
     public ActionResult<PassengerRm> Find(string email)
     {
-        var passenger = _passengers.FirstOrDefault(p => p.Email == email);
+        var passenger = Passengers.FirstOrDefault(p => p.Email == email);
 
         if (passenger == null) return NotFound();
 
