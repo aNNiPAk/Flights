@@ -2,9 +2,9 @@
 
 public record FlightRm(
     Guid Id,
-    string Airline, 
-    TimePlaceRm Arrival, 
-    TimePlaceRm Departure, 
-    string Price, 
+    string Airline,
+    TimePlaceRm Arrival,
+    TimePlaceRm Departure,
+    string Price,
     int RemainingNumberOfSeats
-    );
+);
