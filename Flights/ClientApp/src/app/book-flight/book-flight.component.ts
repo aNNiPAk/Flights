@@ -61,7 +61,7 @@ export class BookFlightComponent {
     };
 
     this.flightService.bookFlight({ body: booking }).subscribe({
-      next: console.log,
+      next: (_) => this.router.navigate(['/my-booking']),
       error: console.error,
     });
   }
