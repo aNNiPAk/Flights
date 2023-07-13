@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from '../api/services/flight.service';
 import { BookDto, FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -23,8 +23,19 @@ export class BookFlightComponent {
   flight: FlightRm = {};
 
   form = this.fb.group({
-    number: [1],
+    number: [
+      1,
+      Validators.compose([
+        Validators.required,
+        Validators.min(1),
+        Validators.max(254),
+      ]),
+    ],
   });
+
+  get number() {
+    return this.form.controls.number;
+  }
 
   ngOnInit() {
     if (!this.authService.currentUser) {
@@ -51,7 +62,9 @@ export class BookFlightComponent {
     console.log(err);
   };
 
-  book() {
+  public book(): void {
+    if (this.form.invalid) return;
+
     console.log(this.form.value.number, this.flightId);
 
     const booking: BookDto = {
