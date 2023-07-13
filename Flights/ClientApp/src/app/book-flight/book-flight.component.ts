@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from '../api/services/flight.service';
-import { FlightRm } from '../api/models';
+import { BookDto, FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
 import { FormBuilder } from '@angular/forms';
 
@@ -53,5 +53,16 @@ export class BookFlightComponent {
 
   book() {
     console.log(this.form.value.number, this.flightId);
+
+    const booking: BookDto = {
+      flightId: this.flight.id,
+      passengerEmail: this.authService.currentUser?.email,
+      numberOfSeats: this.form.value?.number ?? 0,
+    };
+
+    this.flightService.bookFlight({ body: booking }).subscribe({
+      next: console.log,
+      error: console.error,
+    });
   }
 }
