@@ -1,3 +1,16 @@
-﻿namespace Flights.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record NewPassengerDto(string Email, string FirstName, string LastName, bool Gender);
+namespace Flights.Dtos;
+
+public record NewPassengerDto(
+    [Required]
+    [EmailAddress]
+    [StringLength(100, MinimumLength = 3)]
+    string Email,
+    [Required]
+    [StringLength(35, MinimumLength = 2)]
+    string FirstName,
+    [Required]
+    [StringLength(35, MinimumLength = 2)]
+    string LastName,
+    [Required] bool Gender);
