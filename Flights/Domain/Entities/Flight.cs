@@ -1,4 +1,6 @@
-﻿namespace Flights.Domain.Entities;
+﻿using Flights.Domain.Errors;
+
+namespace Flights.Domain.Entities;
 
 public record Flight(
     Guid Id,
@@ -11,4 +13,20 @@ public record Flight(
 {
     public readonly IList<Booking> Bookings = new List<Booking>();
     public int RemainingNumberOfSeats { get; set; } = RemainingNumberOfSeats;
+
+    internal object? MakeBooking(string passengerEmail, byte numberOfSeats)
+    {
+        if (RemainingNumberOfSeats < numberOfSeats)
+            return new OverbookError();
+
+        Bookings.Add(
+            new Booking(
+                passengerEmail,
+                numberOfSeats
+            )
+        );
+        RemainingNumberOfSeats -= numberOfSeats;
+
+        return null;
+    }
 }
