@@ -59,7 +59,13 @@ export class BookFlightComponent {
       this.router.navigate(['/search-flight']);
     }
 
-    console.log(err);
+    if (err.status == 409) {
+      console.log('err: ', err);
+      alert(JSON.parse(err.error).message);
+    }
+
+    console.log('Response error. Status: ', err.status);
+    console.log('Response error. Status text: ', err.statusText);
   };
 
   public book(): void {
@@ -75,7 +81,7 @@ export class BookFlightComponent {
 
     this.flightService.bookFlight({ body: booking }).subscribe({
       next: (_) => this.router.navigate(['/my-booking']),
-      error: console.error,
+      error: this.errorHandling,
     });
   }
 }
