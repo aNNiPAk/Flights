@@ -80,7 +80,7 @@ export class BookFlightComponent {
     };
 
     this.flightService.bookFlight({ body: booking }).subscribe({
-      next: (_) => this.router.navigate(['/my-booking']),
+      next: (_) => this.router.navigate(['/my-bookings']),
       error: this.errorHandling,
     });
   }
