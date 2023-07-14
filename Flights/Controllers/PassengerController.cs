@@ -11,13 +11,20 @@ namespace Flights.Controllers;
 [ApiController]
 public class PassengerController : ControllerBase
 {
+    private readonly Entities _entities;
+
+    public PassengerController(Entities entities)
+    {
+        _entities = entities;
+    }
+
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
     public IActionResult Register(NewPassengerDto dto)
     {
-        Entities.Passengers.Add(
+        _entities.Passengers.Add(
             new Passenger(
                 dto.Email,
                 dto.FirstName,
@@ -25,14 +32,14 @@ public class PassengerController : ControllerBase
                 dto.Gender
             )
         );
-        Debug.WriteLine($"Registers Passenger count: {Entities.Passengers.Count}");
+        Debug.WriteLine($"Registers Passenger count: {_entities.Passengers.Count}");
         return CreatedAtAction(nameof(Find), new { email = dto.Email });
     }
 
     [HttpGet("{{email}}")]
     public ActionResult<PassengerRm> Find(string email)
     {
-        var passenger = Entities.Passengers.FirstOrDefault(p => p.Email == email);
+        var passenger = _entities.Passengers.FirstOrDefault(p => p.Email == email);
 
         if (passenger == null) return NotFound();
 

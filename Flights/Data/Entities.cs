@@ -4,11 +4,9 @@ namespace Flights.Data;
 
 public class Entities
 {
-    public static readonly IList<Passenger> Passengers = new List<Passenger>();
-
     private static readonly Random Random = new();
 
-    public static readonly Flight[] Flights =
+    public readonly Flight[] Flights =
     {
         new(Guid.NewGuid(),
             "American Airlines",
@@ -41,4 +39,6 @@ public class Entities
             Random.Next(90, 5000).ToString(),
             Random.Next(1, 853))
     };
+
+    public readonly IList<Passenger> Passengers = new List<Passenger>();
 }
