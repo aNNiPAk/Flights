@@ -21,7 +21,7 @@ public class BookingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IEnumerable<BookingRm>> List(string email)
     {
-        var bookings = _entities.Flights
+        var bookings = _entities.Flights.ToList()
             .SelectMany(f => f.Bookings
                 .Where(b => b.PassengerEmail == email)
                 .Select(_ =>
