@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Flights.Data;
 using Flights.Domain.Entities;
 using Flights.Dtos;
 using Flights.ReadModels;
@@ -10,15 +11,13 @@ namespace Flights.Controllers;
 [ApiController]
 public class PassengerController : ControllerBase
 {
-    private static readonly IList<Passenger> Passengers = new List<Passenger>();
-
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
     public IActionResult Register(NewPassengerDto dto)
     {
-        Passengers.Add(
+        Entities.Passengers.Add(
             new Passenger(
                 dto.Email,
                 dto.FirstName,
@@ -26,14 +25,14 @@ public class PassengerController : ControllerBase
                 dto.Gender
             )
         );
-        Debug.WriteLine($"Registers Passenger count: {Passengers.Count}");
+        Debug.WriteLine($"Registers Passenger count: {Entities.Passengers.Count}");
         return CreatedAtAction(nameof(Find), new { email = dto.Email });
     }
 
     [HttpGet("{{email}}")]
     public ActionResult<PassengerRm> Find(string email)
     {
-        var passenger = Passengers.FirstOrDefault(p => p.Email == email);
+        var passenger = Entities.Passengers.FirstOrDefault(p => p.Email == email);
 
         if (passenger == null) return NotFound();
 
