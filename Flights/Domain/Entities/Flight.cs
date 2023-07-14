@@ -2,17 +2,35 @@
 
 namespace Flights.Domain.Entities;
 
-public record Flight(
-    Guid Id,
-    string Airline,
-    TimePlace Arrival,
-    TimePlace Departure,
-    string Price,
-    int RemainingNumberOfSeats
-)
+public class Flight
 {
-    public readonly IList<Booking> Bookings = new List<Booking>();
-    public int RemainingNumberOfSeats { get; set; } = RemainingNumberOfSeats;
+    public IList<Booking> Bookings = new List<Booking>();
+
+    public Flight()
+    {
+    }
+
+    public Flight(Guid id,
+        string airline,
+        TimePlace arrival,
+        TimePlace departure,
+        string price,
+        int remainingNumberOfSeats)
+    {
+        Id = id;
+        Airline = airline;
+        Arrival = arrival;
+        Departure = departure;
+        Price = price;
+        RemainingNumberOfSeats = remainingNumberOfSeats;
+    }
+
+    public Guid Id { get; init; }
+    public string Airline { get; init; }
+    public TimePlace Arrival { get; init; }
+    public TimePlace Departure { get; init; }
+    public string Price { get; init; }
+    public int RemainingNumberOfSeats { get; set; }
 
     internal object? MakeBooking(string passengerEmail, byte numberOfSeats)
     {

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Flights.Data;
+﻿using Flights.Data;
 using Flights.Domain.Entities;
 using Flights.Dtos;
 using Flights.ReadModels;
@@ -32,7 +31,9 @@ public class PassengerController : ControllerBase
                 dto.Gender
             )
         );
-        Debug.WriteLine($"Registers Passenger count: {_entities.Passengers.Count}");
+
+        _entities.SaveChanges();
+
         return CreatedAtAction(nameof(Find), new { email = dto.Email });
     }
 
