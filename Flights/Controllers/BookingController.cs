@@ -51,15 +51,16 @@ public class BookingController : ControllerBase
 
         var error = flight?.CancelBooking(dto.PassengerEmail, dto.NumberOfSeats);
 
-        if (error == null)
+        switch (error)
         {
-            _entities.SaveChanges();
-            return NoContent();
+            case null:
+                _entities.SaveChanges();
+                return NoContent();
+            case NotFoundError:
+                return NotFound();
+            default:
+                throw new Exception(
+                    $"The error of type: {error.GetType().Name} occurred while cancelling the booking made by {dto.PassengerEmail}");
         }
-
-        if (error is NotFoundError) return NotFound();
-
-        throw new Exception(
-            $"The error of type: {error.GetType().Name} occurred while cancelling the booking made by {dto.PassengerEmail}");
     }
 }
