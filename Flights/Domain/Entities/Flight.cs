@@ -47,4 +47,18 @@ public class Flight
 
         return null;
     }
+
+    public object? CancelBooking(string passangerEmail, byte numberOfSeats)
+    {
+        var booking = Bookings.FirstOrDefault(b =>
+            numberOfSeats == b.NumberOfSeats && string.Equals(passangerEmail, b.PassengerEmail,
+                StringComparison.CurrentCultureIgnoreCase));
+
+        if (booking == null) return new NotFoundError();
+
+        Bookings.Remove(booking);
+        RemainingNumberOfSeats += numberOfSeats;
+
+        return null;
+    }
 }
