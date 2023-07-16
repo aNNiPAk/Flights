@@ -3,6 +3,7 @@ import { BookingRm } from '../api/models/booking-rm';
 import { BookingService } from '../api/services/booking.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { BookDto } from '../api/models';
 
 @Component({
   selector: 'app-my-bookings',
@@ -32,5 +33,21 @@ export class MyBookingsComponent implements OnInit {
     console.log('Response Error, Status: ' + err.status);
     console.log('Response Error, Status text: ' + err.statusText);
     console.log(err);
+  }
+
+  cancel(booking: BookingRm) {
+    const dto: BookDto = {
+      flightId: booking.flightId,
+      numberOfSeats: booking.remainingNumberOfSeats,
+      passengerEmail: booking.passengerEmail,
+    };
+
+    this.bookingsService
+      .cancelBooking({ body: dto })
+      .subscribe({
+        next: (_) =>
+          (this.bookings = this.bookings.filter((b) => b != booking)),
+        error: this.handleError,
+      });
   }
 }
