@@ -26,14 +26,14 @@ public class BookingController : ControllerBase
         var bookings = _entities.Flights.ToList()
             .SelectMany(f => f.Bookings
                 .Where(b => b.PassengerEmail == email)
-                .Select(_ =>
+                .Select(b =>
                     new BookingRm(
                         f.Id,
                         f.Airline,
                         f.Price,
                         new TimePlaceRm(f.Arrival.Place, f.Arrival.Time),
                         new TimePlaceRm(f.Departure.Place, f.Departure.Time),
-                        f.RemainingNumberOfSeats,
+                        b.NumberOfSeats,
                         email
                     )));
 

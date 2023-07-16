@@ -6,7 +6,7 @@ export interface BookingRm {
   arrival?: TimePlaceRm;
   departure?: TimePlaceRm;
   flightId?: string;
+  numberOfBookedSeats?: number;
   passengerEmail?: null | string;
   price?: null | string;
-  remainingNumberOfSeats?: number;
 }

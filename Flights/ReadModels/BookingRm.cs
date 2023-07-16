@@ -6,6 +6,6 @@ public record BookingRm(
     string Price,
     TimePlaceRm Arrival,
     TimePlaceRm Departure,
-    int RemainingNumberOfSeats,
+    int NumberOfBookedSeats,
     string PassengerEmail
 );
