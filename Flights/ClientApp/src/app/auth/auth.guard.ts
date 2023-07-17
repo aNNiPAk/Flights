@@ -2,7 +2,9 @@ import { AuthService } from './auth.service';
 import { Injectable, inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PermissionsService {
   constructor(private authService: AuthService, public router: Router) {}
 
