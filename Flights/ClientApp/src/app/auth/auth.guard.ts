@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
 import { Injectable, inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -8,14 +8,17 @@ import { CanActivateFn, Router } from '@angular/router';
 export class PermissionsService {
   constructor(private authService: AuthService, public router: Router) {}
 
-  canActivate() {
+  canActivate(route: ActivatedRouteSnapshot, state: any) {
     if (!this.authService.currentUser) {
-      this.router.navigate(['/register-passenger']);
+      this.router.navigate([
+        '/register-passenger',
+        { requestedUrl: state.url },
+      ]);
     }
     return true;
   }
 }
 
 export const authGuard: CanActivateFn = (route, state) => {
-  return inject(PermissionsService).canActivate();
+  return inject(PermissionsService).canActivate(route, state);
 };

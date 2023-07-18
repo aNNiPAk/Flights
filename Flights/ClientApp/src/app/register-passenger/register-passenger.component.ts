@@ -1,21 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PassengerService } from '../api/services';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
   templateUrl: './register-passenger.component.html',
   styleUrls: ['./register-passenger.component.css'],
 })
-export class RegisterPassengerComponent {
+export class RegisterPassengerComponent implements OnInit {
   constructor(
     private passengerService: PassengerService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
+
+  requestedUrl?: string | undefined;
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(
+      (p) => (this.requestedUrl = p['requestedUrl'])
+    );
+  }
 
   form = this.fb.group({
     email: [
@@ -72,6 +81,6 @@ export class RegisterPassengerComponent {
   private login = () => {
     this.authService.loginUser({ email: this.form.value.email });
 
-    this.router.navigate(['/search-flight']);
+    this.router.navigate([this.requestedUrl ?? '/search-flight']);
   };
 }
