@@ -8,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add db context
 builder.Services.AddDbContext<Entities>(options =>
     options.UseSqlServer(
-        @"Data Source=(localdb)\MSSQLLocalDB;Database=Flights;User id=User;Password=1234!Secret;"));
+        builder.Configuration.GetConnectionString("Flights")
+    )
+);
 
 // Add services to the container.
 
@@ -71,9 +73,9 @@ if (entities != null && !entities.Flights.Any())
             random.Next(1, 853))
     };
 
-    entities?.Flights.AddRange(flightsToSeed);
+    entities.Flights.AddRange(flightsToSeed);
 
-    entities?.SaveChanges();
+    entities.SaveChanges();
 }
 
 app
