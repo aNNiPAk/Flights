@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FlightService } from '../api/services/flight.service';
 import { FlightRm } from '../api/models';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search-flights',
@@ -8,9 +9,18 @@ import { FlightRm } from '../api/models';
   styleUrls: ['./search-flights.component.css'],
 })
 export class SearchFlightsComponent {
+  constructor(private flightService: FlightService, private fb: FormBuilder) {}
+
+  searchForm = this.fb.group({
+    from: [''],
+    destination: [''],
+    fromDate: [''],
+    toDate: [''],
+    numberOfPassenger: [1],
+  });
+
   searchResult: FlightRm[] = [];
 
-  constructor(private flightService: FlightService) {}
   search(): void {
     this.flightService.searchFlight({}).subscribe({
       next: (r) => (this.searchResult = r),
