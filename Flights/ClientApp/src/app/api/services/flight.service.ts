@@ -30,11 +30,21 @@ export class FlightService extends BaseService {
    */
   searchFlight$Plain$Response(
     params?: {
+      from?: string;
+      destination?: string;
+      fromDate?: string;
+      toDate?: string;
+      numberOfPassenger?: number;
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<Array<FlightRm>>> {
     const rb = new RequestBuilder(this.rootUrl, FlightService.SearchFlightPath, 'get');
     if (params) {
+      rb.query('from', params.from, {});
+      rb.query('destination', params.destination, {});
+      rb.query('fromDate', params.fromDate, {});
+      rb.query('toDate', params.toDate, {});
+      rb.query('numberOfPassenger', params.numberOfPassenger, {});
     }
 
     return this.http.request(
@@ -55,6 +65,11 @@ export class FlightService extends BaseService {
    */
   searchFlight$Plain(
     params?: {
+      from?: string;
+      destination?: string;
+      fromDate?: string;
+      toDate?: string;
+      numberOfPassenger?: number;
     },
     context?: HttpContext
   ): Observable<Array<FlightRm>> {
@@ -71,11 +86,21 @@ export class FlightService extends BaseService {
    */
   searchFlight$Response(
     params?: {
+      from?: string;
+      destination?: string;
+      fromDate?: string;
+      toDate?: string;
+      numberOfPassenger?: number;
     },
     context?: HttpContext
   ): Observable<StrictHttpResponse<Array<FlightRm>>> {
     const rb = new RequestBuilder(this.rootUrl, FlightService.SearchFlightPath, 'get');
     if (params) {
+      rb.query('from', params.from, {});
+      rb.query('destination', params.destination, {});
+      rb.query('fromDate', params.fromDate, {});
+      rb.query('toDate', params.toDate, {});
+      rb.query('numberOfPassenger', params.numberOfPassenger, {});
     }
 
     return this.http.request(
@@ -96,6 +121,11 @@ export class FlightService extends BaseService {
    */
   searchFlight(
     params?: {
+      from?: string;
+      destination?: string;
+      fromDate?: string;
+      toDate?: string;
+      numberOfPassenger?: number;
     },
     context?: HttpContext
   ): Observable<Array<FlightRm>> {

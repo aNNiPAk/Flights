@@ -25,8 +25,10 @@ public class FlightController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpGet]
-    public IEnumerable<FlightRm> Search()
+    public IEnumerable<FlightRm> Search([FromQuery] FlightSearchParameters parameters)
     {
+        _logger.LogInformation("Params: {}", parameters);
+
         return _entities.Flights.Select(x =>
             new FlightRm(
                 x.Id,

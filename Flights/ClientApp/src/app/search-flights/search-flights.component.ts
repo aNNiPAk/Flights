@@ -22,7 +22,15 @@ export class SearchFlightsComponent {
   searchResult: FlightRm[] = [];
 
   search(): void {
-    this.flightService.searchFlight({}).subscribe({
+    const searchParams = {
+      from: this.searchForm.get('from')?.value || '',
+      destination: this.searchForm.get('destination')?.value || '',
+      fromDate: this.searchForm.get('fromDate')?.value || '',
+      toDate: this.searchForm.get('toDate')?.value || '',
+      numberOfPassenger: this.searchForm.get('numberOfPassenger')?.value || 1,
+    };
+
+    this.flightService.searchFlight(searchParams).subscribe({
       next: (r) => (this.searchResult = r),
       error: this.handleError,
     });
