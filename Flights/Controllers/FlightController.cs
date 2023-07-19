@@ -1,4 +1,5 @@
 ﻿using Flights.Data;
+using Flights.Domain.Entities;
 using Flights.Domain.Errors;
 using Flights.Dtos;
 using Flights.ReadModels;
@@ -29,7 +30,26 @@ public class FlightController : ControllerBase
     {
         _logger.LogInformation("Params: {}", parameters);
 
-        return _entities.Flights.Select(x =>
+        IQueryable<Flight> flights = _entities.Flights;
+
+        if (!string.IsNullOrWhiteSpace(parameters.From))
+            flights = flights.Where(f => f.Departure.Place.ToLower().Contains(parameters.From));
+
+        if (!string.IsNullOrWhiteSpace(parameters.Destination))
+            flights = flights.Where(f => f.Arrival.Place.ToLower().Contains(parameters.Destination));
+
+        if (parameters.FromDate != null)
+            flights = flights.Where(f => f.Departure.Time >= parameters.FromDate.Value.Date);
+
+        if (parameters.ToDate != null)
+            flights = flights.Where(f => f.Arrival.Time >= parameters.ToDate.Value.Date.AddDays(1).AddTicks(-1));
+
+        if (parameters.NumberOfPassenger != 0 && parameters.NumberOfPassenger != null)
+            flights = flights.Where(f => f.RemainingNumberOfSeats >= parameters.NumberOfPassenger);
+        else
+            flights = flights.Where(f => f.RemainingNumberOfSeats >= 1);
+
+        return flights.Select(x =>
             new FlightRm(
                 x.Id,
                 x.Airline,

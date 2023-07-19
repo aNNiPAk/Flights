@@ -11,6 +11,10 @@ import { FormBuilder } from '@angular/forms';
 export class SearchFlightsComponent {
   constructor(private flightService: FlightService, private fb: FormBuilder) {}
 
+  ngOnInit(): void {
+    this.search();
+  }
+
   searchForm = this.fb.group({
     from: [''],
     destination: [''],
