@@ -104,7 +104,7 @@ public class FlightController : ControllerBase
         {
             _entities.SaveChanges();
         }
-        catch (DbUpdateConcurrencyException e)
+        catch (DbUpdateConcurrencyException)
         {
             return Conflict(new { message = "An error occurred while booking. Please try again." });
         }
